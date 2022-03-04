@@ -16,7 +16,7 @@ The software is meant to control labrecorder. Since it interfaces through UDP th
 
 - Download the .zip release from github (right of the page)
 - Go to `psychopy/Lib/site-packages/`
-- extract the folder labrecipipe in there
+- Open the zip and keep opening folders until you reach `site-packages`, extract the subfolders `labrecipipe` and `labrecipipe-<version>.dist-info`.
 - test the installation from your psychopy code `import labrecipipe`
 
 ## Installation (manual)

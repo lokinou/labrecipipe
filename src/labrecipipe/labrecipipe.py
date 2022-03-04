@@ -118,7 +118,7 @@ class LabRecorderHandler:
 
     def start_recording(self, output_eeg_path: str, force_restart: bool = False):
         eeg_fullpath = os.path.abspath(output_eeg_path)
-        self._set_recording(record=True, force_restart=True, path_eeg=eeg_fullpath)
+        self._set_recording(record=True, force_restart=force_restart, path_eeg=eeg_fullpath)
         if eeg_fullpath is None or not isinstance(eeg_fullpath, str):
             logger.warning('Please define an EEG output file')
             pass

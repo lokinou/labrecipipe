@@ -46,26 +46,32 @@ Please note that labrecorder is a bit greedy and will select all streams availab
 ```
 from recipipe import LabRecorderHandler
 
-path_to_labrecorder_exe = r'C:\Vision\LSL-Apps\BrainAmpSeries\bin\BrainAmpSeries.exe'  # (optional) path to labrecorder
-labrecorder_cfg = './lab_rec_brainamp_placeholders.cfg'  # (optional) path to parameter file 
+# Define the stream names and hosts by hand, using none default to the computer's hostname
+lrh = LabRecorderHandler(path_to_labrecorder_exe=r'./LabRecorder/LabRecorder.exe',
+list_required_streams=[('LiveAmpSN-100709-0788', None),
+('LiveAmpSN-100709-0788-DeviceTrigger', 'localhost')])
 
-# call the labrecorder handler pipe that will pass messages via UDP.
-lbh = LabRecorderHandler(path_to_labrecorder=path_to_labrecorder_exe, labrecorder_cfg='./lab_rec_brainamp_placeholders.cfg')
+# Use a custom configuration file
+lrh = LabRecorderHandler(path_to_labrecorder_exe=r'./LabRecorder/LabRecorder.exe',
+labrecorder_cfg=r'./LabRecorder/LabRecorder.cfg')
 
-# start labrecorder
+# Call labrecorder with default BrainAmpSeries parameters
+lrh = LabRecorderHandler(path_to_labrecorder_exe=DEFAULT_PATH_EXE,
+list_required_streams=LabRecorderHandler.BRAINAMP_STREAMS)
+
 lrh.start_lab_recorder()
 
 # Start recording for 10 seconds
-lrh.start_recording(output_eeg_path='./test.eeg',  # define the output filename
+lrh.start_recording(output_eeg_path=r'./test.eeg',  # change the output filename
 force_restart=True)  # force to restart labrecorder to update streams
+time.sleep(10)
 
-time.sleep(10)  # record for 10 seconds
+lrh.update_lsl()
+
+time.sleep(10)
 
 # stop recording
-lrh.stop_recording()  # properly interrups the recording
-
-#time.sleep(1)  # eventually needed
-
+lrh.stop_recording()
 # close labrecorder (kills the process)
 lrh.close()
 ```

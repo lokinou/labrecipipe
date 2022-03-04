@@ -44,21 +44,24 @@ Github: `https://github.com/labstreaminglayer/App-LabRecorder`
 Please note that labrecorder is a bit greedy and will select all streams available on the network. However, unless new streams are defined in the configuration files, they won't be added when discovered. The `force_restart=True` parameter ensures that all stream discovered are recorded
 
 ```
-from recipipe import LabRecorderHandler
+from labrecipipe import LabRecorderHandler
+importr time
 
-# Define the stream names and hosts by hand, using none default to the computer's hostname
-lrh = LabRecorderHandler(path_to_labrecorder_exe=r'./LabRecorder/LabRecorder.exe',
-list_required_streams=[('LiveAmpSN-100709-0788', None),
-('LiveAmpSN-100709-0788-DeviceTrigger', 'localhost')])
+path_to_labrecorder = r'C:/LabRecorder/LabRecorder.exe'
 
-# Use a custom configuration file
+# (Option 1)Call labrecorder with default BrainAmpSeries parameters
+lrh = LabRecorderHandler(path_to_labrecorder_exe=path_to_labrecorder,
+list_required_streams=LabRecorderHandler.BRAINAMP_STREAMS)
+'''
+# (Option 2) Use a custom configuration file
 lrh = LabRecorderHandler(path_to_labrecorder_exe=r'./LabRecorder/LabRecorder.exe',
 labrecorder_cfg=r'./LabRecorder/LabRecorder.cfg')
 
-# Call labrecorder with default BrainAmpSeries parameters
+# (Option 3) Define the stream names and hosts by hand, using none default to the computer's hostname
 lrh = LabRecorderHandler(path_to_labrecorder_exe=DEFAULT_PATH_EXE,
-list_required_streams=LabRecorderHandler.BRAINAMP_STREAMS)
-
+list_required_streams=[('LiveAmpSN-100709-0788', None),
+('LiveAmpSN-100709-0788-DeviceTrigger', 'localhost')])
+'''
 lrh.start_lab_recorder()
 
 # Start recording for 10 seconds

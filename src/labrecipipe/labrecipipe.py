@@ -4,6 +4,7 @@ import logging
 import pathlib
 from threading import Thread
 import socket
+import time
 import argparse
 from typing import Tuple, List
 from subprocess import Popen
@@ -191,8 +192,6 @@ class LabRecorderHandler:
 
 
 if __name__ == '__main__':
-    import time
-
     parser = argparse.ArgumentParser(description='Start an interface to configure and control labrecorder')
     parser.add_argument('labrecorder', type=str, nargs='?',
                         help='path to LabRecorder folder')
@@ -203,7 +202,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     path_to_labrecorder = args.labrecorder if args.labrecorder is not None else None
     config_labrecorder = args.configfile if args.configfile is not None else None
-
 
 
     # Define the stream names and hosts by hand, using none default to the computer's hostname
